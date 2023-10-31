@@ -1,6 +1,7 @@
 import json
 from genericRequest import genericPost, genericGet
 from paths import *
+from utils import *
 
 class grindrUser:
     def __init__(self):
@@ -11,15 +12,14 @@ class grindrUser:
 
     def login(self, email, password):
         response = genericPost(SESSIONS, { 'email': email, 'password': password, 'token': '' })
-        response = json.loads(response)
         self.sessionId = response['sessionId']
         self.profileId = response['profileId']
         self.authToken = response['authToken']
         self.xmppToken = response['xmppToken']
 
-    def getProfiles(self):
+    def getProfiles(self, lat, lon):
         params = {
-            'nearbyGeoHash': '9q9hvuskv2cf',
+            'nearbyGeoHash': to_geohash(lat, lon),
             'onlineOnly': 'false',
             'photoOnly': 'false',
             'faceOnly': 'false',
@@ -31,10 +31,14 @@ class grindrUser:
 
         response = genericGet(GET_USERS, params, auth_token=self.sessionId)
         return response
+
+    def getProfile(self, profileId):
+        response = genericGet(GET_PROFILE + profileId, {}, auth_token=self.sessionId)
+        return response
     
 user = grindrUser()
 mail = input('Email: ')
 password = input('Password: ')
 
 user.login(mail, password)
-print(user.getProfiles())
+print(user.getProfiles(39.476916, -99.796235))

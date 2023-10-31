@@ -1,7 +1,6 @@
 import pycurl
 import json
 import zlib
-import io
 
 
 def genericPost(path, data, auth_token=None):
@@ -46,7 +45,7 @@ def genericPost(path, data, auth_token=None):
 
     response_data = b''.join(response_data)
     decompressed_response = zlib.decompress(response_data, zlib.MAX_WBITS | 16)
-    return decompressed_response
+    return json.loads(decompressed_response)
 
 def genericGet(path, data, auth_token=None):
     response_data = []
@@ -87,4 +86,4 @@ def genericGet(path, data, auth_token=None):
     response_data = b''.join(response_data)
 
     decompressed_response = zlib.decompress(response_data, zlib.MAX_WBITS | 16)
-    return decompressed_response
+    return json.loads(decompressed_response)
