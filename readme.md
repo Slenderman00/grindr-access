@@ -1,48 +1,83 @@
+# GrindrUser.py Readme
 
-# Login request
+## Overview
 
-```curl
-curl --request POST \
-  --url https://grindr.mobi/v3/sessions \
-  --compressed \
-  --header 'accept: application/json' \
-  --header 'accept-encoding: gzip' \
-  --header 'accept-language: en-US' \
-  --header 'connection: Keep-Alive' \
-  --header 'content-type: application/json; charset=UTF-8' \
-  --header 'host: grindr.mobi' \
-  --header 'l-device-info: 2938f76cff50af57;GLOBAL;2;2069590016;2277x1080;a9ffffa4-2b0e-479d-b3db-ae117c0a9686' \
-  --header 'l-locale: en_US' \
-  --header 'l-time-zone: Europe/Oslo' \
-  --header 'requirerealdeviceinfo: true' \
-  --header 'user-agent: grindr3/9.17.3.118538;118538;Free;Android 14;sdk_gphone64_x86_64;Google' \
-  --data '{"email":"[EMAIL]","password":"[PASSWORD]","token":""}'
-```
+`grindrUser.py` is a Python module that provides a set of functions to interact with the Grindr API. Grindr is a popular social networking and dating app. This module allows you to perform various actions, such as logging in, retrieving user profiles, sending taps, getting user information, and more.
 
-returns
-```
-{"profileId":"570525909","sessionId":"[BASE64].[BASE64 (contains features)].[TOKEN]","xmppToken":"[BASE 64 ENCODED DATA].[BASE 64 ENCODED DATA].[TOKEN]","authToken":"[AUTHTOKEN]"}
-```
+## Usage
 
+To use `grindrUser.py`, you should follow these steps:
 
-The firebase token will work even if it has been modified or is blank:
-```
-euY8_yFrQYiVqor_4YQfoK:APA91bGxm4iOVAMQ8BSCJzSRE06IGj_EKs1kihEUgkuo7f8Y2nyHuclWX2SSC0IkuzZOzjcHXwRi9yoLth6TP4s8P7mbw5DiUS1pqtT9qu55HFIJ1dgYoC-CCPXsTvI_XWXPoDOxtlI_
-```
+1. Import the module:
 
+    ```python
+    from grindrUser import grindrUser
+    ```
+
+2. Create an instance of the `grindrUser` class:
+
+    ```python
+    user = grindrUser()
+    ```
+
+3. Log in to your Grindr account using your email and password:
+
+    ```python
+    user.login("your_email@example.com", "your_password")
+    ```
+
+4. Use the provided methods to interact with the Grindr API. Here are some of the available methods:
+
+   - `getProfiles(lat, lon)`: Retrieve user profiles near a specific location.
+
+   - `getTaps()`: Get the list of taps received.
+
+   - `tap(profileId, type)`: Send a tap to a user with the specified profile ID and type.
+
+   - `getProfile(profileId)`: Get the profile information of a user with the specified profile ID.
+
+   - `getProfileStatuses(profileIdList)`: Get the status of multiple profiles using their IDs.
+
+   - `getAlbum(profileId)`: Get the album information of a user with the specified profile ID.
+
+   - `sessions(email)`: Get session data or renew an existing session using an email.
+
+   - `generatePlainAuth()`: Generate plain authentication information.
+
+## Example
+
+Here's an example of how to use the module to retrieve user profiles:
+
+```python
+from grindrUser import grindrUser
+
+# Create an instance of the grindrUser class
+user = grindrUser()
+
+# Log in to your Grindr account
+user.login("your_email@example.com", "your_password")
+
+# Get user profiles near a specific location (e.g., latitude 123.456 and longitude 789.012)
+profiles = user.getProfiles(123.456, 789.012)
+
+# Print the response
+print(profiles)
 ```
-curl --request GET \
-  --url 'https://grindr.mobi/v1/cascade?nearbyGeoHash=9q9hvuskv2cf&onlineOnly=true&photoOnly=false&faceOnly=false&notRecentlyChatted=false&fresh=false&pageNumber=1&rightNow=false' \
-  --compressed \
-  --header 'accept: application/json' \
-  --header 'accept-encoding: gzip' \
-  --header 'accept-language: en-US' \
-  --header 'authorization: Grindr3 [AUTHTOKEN]' \
-  --header 'connection: Keep-Alive' \
-  --header 'host: grindr.mobi' \
-  --header 'l-device-info: 2938f76cff50af57;GLOBAL;2;2069590016;2277x1080;a9ffffa4-2b0e-479d-b3db-ae117c0a9686' \
-  --header 'l-grindr-roles: []' \
-  --header 'l-locale: en_US' \
-  --header 'l-time-zone: Europe/Oslo' \
-  --header 'user-agent: grindr3/9.17.3.118538;118538;Free;Android 14;sdk_gphone64_x86_64;Google'
-```
+You can also refer to the example.py file for usage and implementation examples.
+
+## To-Do
+
+- [ ] Integrate an XMPP client for real-time messaging.
+- [ ] Document Grindr API.
+
+## Notes
+
+- Make sure to keep your Grindr credentials (email and password) secure and do not share them.
+
+- The `genericRequest`, `paths`, and `utils` modules are used by `grindrUser.py`. Ensure that they are properly configured and available in your Python environment.
+
+- The module provides basic functionality for interacting with the Grindr API. You can extend it or build additional features as needed.
+
+## Disclaimer
+
+Please use this module responsibly and in compliance with Grindr's terms of service and guidelines. Unauthorized use or misuse of the module may violate Grindr's policies and could result in account suspension or legal action. Use this module at your own risk.
