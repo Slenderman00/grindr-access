@@ -34,7 +34,26 @@ class grindrUser:
 
         response = genericGet(GET_USERS, params, auth_token=self.sessionId)
         return response
+    
+    def getTaps(self):
+        response = genericGet(TAPS_RECIEVED, {}, auth_token=self.sessionId)
+        return response
+
+    # type is a number from 1 - ?
+    def tap(self, profileId, type):
+        response = genericPost(TAP, {"recipientId": profileId, "tapType": type}, auth_token=self.sessionId)
+        return response
 
     def getProfile(self, profileId):
         response = genericGet(GET_PROFILE + profileId, {}, auth_token=self.sessionId)
         return response
+    
+    # profileIdList MUST be an array of profile ids
+    def getProfileStatuses(self, profileIdList):
+        response = genericPost(STATUS, {"profileIdList": profileIdList}, auth_token=self.sessionId)
+        return response
+    
+    def getAlbum(self, profileId):
+        response = genericPost(ALBUM, {"profileId": profileId}, auth_token=self.sessionId)
+        return response
+    

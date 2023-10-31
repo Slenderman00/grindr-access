@@ -1,3 +1,7 @@
 SESSIONS = "/v3/sessions"
 GET_USERS = "/v1/cascade"
 GET_PROFILE = "/v4/profiles/"
+TAPS_RECIEVED = "/v1/interactions/taps/received"
+TAP = "/v1/interactions/taps"
+STATUS = "/v4/profiles/status"
+ALBUM= "/v2/albums/shares"
