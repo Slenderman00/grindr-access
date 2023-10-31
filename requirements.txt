@@ -1,0 +1,2 @@
+pycurl==7.45.2
+pygeohash==1.2.0
