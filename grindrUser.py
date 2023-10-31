@@ -2,6 +2,7 @@ import json
 from genericRequest import genericPost, genericGet
 from paths import *
 from utils import *
+import binascii
 
 
 class grindrUser:
@@ -77,3 +78,11 @@ class grindrUser:
         self.xmppToken = response["xmppToken"]
 
         return response
+
+    # generating plain auth
+    def generatePlainAuth(self):
+        auth = self.profileId + "@chat.grindr.com" + "\00" + self.profileId + "\00" + self.xmppToken
+        _hex = binascii.b2a_base64(str.encode(auth), newline=False)
+        _hex = str(_hex)
+        _hex = _hex.replace("b'", "").replace("'", "")
+        return _hex

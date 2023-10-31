@@ -1,4 +1,5 @@
 from grindrUser import grindrUser
+from xmpp import connect
 
 user = grindrUser()
 mail = input("Email: ")
@@ -11,3 +12,5 @@ print("------------------- taps -------------------")
 print(user.getTaps())
 print("------------------- sessions -------------------")
 print(user.sessions(mail))
+print("------------------- xmpp -------------------")
+connect(user.generatePlainAuth())
