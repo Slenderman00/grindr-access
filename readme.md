@@ -1,4 +1,4 @@
-# GrindrUser.py Readme
+# Grindr Access Readme
 
 ## Overview
 
