@@ -29,7 +29,7 @@ The firebase token will work even if it has been modified or is blank:
 ```
 euY8_yFrQYiVqor_4YQfoK:APA91bGxm4iOVAMQ8BSCJzSRE06IGj_EKs1kihEUgkuo7f8Y2nyHuclWX2SSC0IkuzZOzjcHXwRi9yoLth6TP4s8P7mbw5DiUS1pqtT9qu55HFIJ1dgYoC-CCPXsTvI_XWXPoDOxtlI_
 ```
-
+# Get Users
 ```
 curl --request GET \
   --url 'https://grindr.mobi/v1/cascade?nearbyGeoHash=9q9hvuskv2cf&onlineOnly=true&photoOnly=false&faceOnly=false&notRecentlyChatted=false&fresh=false&pageNumber=1&rightNow=false' \
