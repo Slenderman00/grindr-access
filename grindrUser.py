@@ -16,6 +16,12 @@ class grindrUser:
         response = genericPost(
             SESSIONS, {"email": email, "password": password, "token": ""}
         )
+        print(response)
+        if 'code' in response:
+            code = response['code']
+
+            if code == 30:
+                print("You need to verify your account via phone number!")
         self.sessionId = response["sessionId"]
         self.profileId = response["profileId"]
         self.authToken = response["authToken"]
