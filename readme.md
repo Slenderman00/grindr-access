@@ -1,4 +1,4 @@
-# Grindr Access Readme
+# Grindr Access
 
 ## Overview
 
