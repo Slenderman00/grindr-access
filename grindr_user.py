@@ -1,23 +1,23 @@
-from genericRequest import generic_post, generic_get
+from generic_request import generic_post, generic_get
 from paths import SESSIONS, TAP, GET_USERS, TAPS_RECIEVED, GET_PROFILE, STATUS, ALBUM
 from utils import to_geohash
 import binascii
 
 
-class grindrUser:
+class GrindrUser:
     def __init__(self):
         self.sessionId = None
-        self.profileId = ''
+        self.profileId = ""
         self.authToken = None
-        self.xmppToken = ''
+        self.xmppToken = ""
 
     def login(self, email, password):
         response = generic_post(
             SESSIONS, {"email": email, "password": password, "token": ""}
         )
         print(response)
-        if 'code' in response:
-            code = response['code']
+        if "code" in response:
+            code = response["code"]
 
             if code == 30:
                 print("You need to verify your account via phone number!")
@@ -86,7 +86,14 @@ class grindrUser:
 
     # generating plain auth
     def generate_plain_auth(self):
-        auth = self.profileId + "@chat.grindr.com" + "\00" + self.profileId + "\00" + self.xmppToken
+        auth = (
+            self.profileId
+            + "@chat.grindr.com"
+            + "\00"
+            + self.profileId
+            + "\00"
+            + self.xmppToken
+        )
         _hex = binascii.b2a_base64(str.encode(auth), newline=False)
         _hex = str(_hex)
         _hex = _hex.replace("b'", "").replace("'", "")

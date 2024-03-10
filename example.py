@@ -1,7 +1,7 @@
-from grindrUser import grindrUser
+from grindr_user import GrindrUser
 from xmpp import connect
 
-user = grindrUser()
+user = GrindrUser()
 mail = input("Email: ")
 password = input("Password: ")
 
