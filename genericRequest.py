@@ -1,9 +1,10 @@
 import pycurl
 import json
 import zlib
+from utils import gen_l_dev_info
 
 
-def genericPost(path, data, auth_token=None):
+def generic_post(path, data, auth_token=None):
     response_data = []
 
     request_data = data
@@ -20,7 +21,7 @@ def genericPost(path, data, auth_token=None):
         "connection: Keep-Alive",
         "content-type: application/json; charset=UTF-8",
         "host: grindr.mobi",
-        "l-device-info: 2938f76cff50af57;GLOBAL;2;2069590016;2277x1080;a9ffffa4-2b0e-479d-b3db-ae117c0a9686",
+        f"l-device-info: {gen_l_dev_info()}",
         "l-locale: en_US",
         "l-time-zone: Europe/Oslo",
         "requirerealdeviceinfo: true",
@@ -46,7 +47,7 @@ def genericPost(path, data, auth_token=None):
     return json.loads(decompressed_response)
 
 
-def genericGet(path, data, auth_token=None):
+def generic_get(path, data, auth_token=None):
     response_data = []
 
     request_data = data
@@ -69,7 +70,7 @@ def genericGet(path, data, auth_token=None):
         "connection: Keep-Alive",
         "content-type: application/json; charset=UTF-8",
         "host: grindr.mobi",
-        "l-device-info: 2938f76cff50af57;GLOBAL;2;2069590016;2277x1080;a9ffffa4-2b0e-479d-b3db-ae117c0a9686",
+        f"l-device-info: {gen_l_dev_info()}",
         "l-locale: en_US",
         "l-time-zone: Europe/Oslo",
         "requirerealdeviceinfo: true",

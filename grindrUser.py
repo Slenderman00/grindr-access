@@ -1,19 +1,18 @@
-import json
-from genericRequest import genericPost, genericGet
-from paths import *
-from utils import *
+from genericRequest import generic_post, generic_get
+from paths import SESSIONS, TAP, GET_USERS, TAPS_RECIEVED, GET_PROFILE, STATUS, ALBUM
+from utils import to_geohash
 import binascii
 
 
 class grindrUser:
     def __init__(self):
         self.sessionId = None
-        self.profileId = None
+        self.profileId = ''
         self.authToken = None
-        self.xmppToken = None
+        self.xmppToken = ''
 
     def login(self, email, password):
-        response = genericPost(
+        response = generic_post(
             SESSIONS, {"email": email, "password": password, "token": ""}
         )
         print(response)
@@ -39,40 +38,40 @@ class grindrUser:
             "rightNow": "false",
         }
 
-        response = genericGet(GET_USERS, params, auth_token=self.sessionId)
+        response = generic_get(GET_USERS, params, auth_token=self.sessionId)
         return response
 
-    def getTaps(self):
-        response = genericGet(TAPS_RECIEVED, {}, auth_token=self.sessionId)
+    def get_taps(self):
+        response = generic_get(TAPS_RECIEVED, {}, auth_token=self.sessionId)
         return response
 
     # type is a number from 1 - ?
     def tap(self, profileId, type):
-        response = genericPost(
+        response = generic_post(
             TAP, {"recipientId": profileId, "tapType": type}, auth_token=self.sessionId
         )
         return response
 
-    def getProfile(self, profileId):
-        response = genericGet(GET_PROFILE + profileId, {}, auth_token=self.sessionId)
+    def get_profile(self, profileId):
+        response = generic_get(GET_PROFILE + profileId, {}, auth_token=self.sessionId)
         return response
 
     # profileIdList MUST be an array of profile ids
-    def getProfileStatuses(self, profileIdList):
-        response = genericPost(
+    def get_profile_statuses(self, profileIdList):
+        response = generic_post(
             STATUS, {"profileIdList": profileIdList}, auth_token=self.sessionId
         )
         return response
 
-    def getAlbum(self, profileId):
-        response = genericPost(
+    def get_album(self, profileId):
+        response = generic_post(
             ALBUM, {"profileId": profileId}, auth_token=self.sessionId
         )
         return response
 
-    #returns session data (might renew it)
+    # returns session data (might renew it)
     def sessions(self, email):
-        response = genericPost(
+        response = generic_post(
             SESSIONS,
             {"email": email, "token": "", "authToken": self.authToken},
             auth_token=self.sessionId,
@@ -86,7 +85,7 @@ class grindrUser:
         return response
 
     # generating plain auth
-    def generatePlainAuth(self):
+    def generate_plain_auth(self):
         auth = self.profileId + "@chat.grindr.com" + "\00" + self.profileId + "\00" + self.xmppToken
         _hex = binascii.b2a_base64(str.encode(auth), newline=False)
         _hex = str(_hex)
