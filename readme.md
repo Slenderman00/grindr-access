@@ -67,6 +67,7 @@ You can also refer to the example.py file for usage and implementation examples.
 
 ## To-Do
 
+- [ ] gen_l_dev_info should be consistent over multiple requests.
 - [ ] Integrate an XMPP client for real-time messaging.
 - [ ] Document Grindr API.
 
