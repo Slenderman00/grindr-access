@@ -25,7 +25,7 @@ def generic_post(path, data, auth_token=None):
         "l-locale: en_US",
         "l-time-zone: Europe/Oslo",
         "requirerealdeviceinfo: true",
-        "user-agent: grindr3/9.17.3.118538;118538;Free;Android 14;sdk_gphone64_x86_64;Google",
+        "user-agent: grindr3/24.7.0.118538;118538;Free;Android 14;sdk_gphone64_x86_64;Google",
     ]
 
     if auth_token is not None:
