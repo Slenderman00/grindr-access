@@ -9,7 +9,8 @@ from .paths import (
     STATUS,
     ALBUM,
     PROFILE,
-    IMAGES
+    IMAGES,
+    LOCATION
 )
 from .utils import to_geohash
 import binascii
@@ -213,3 +214,11 @@ class GrindrUser:
         }
 
         return generic_put(IMAGES, data, auth_token=self.sessionId, proxy=self.proxy, proxy_port=self.proxy_port)
+
+    @check_banned
+    def set_location(self, lat, lng):
+        data = {
+            "geohash": to_geohash(lat, lng)
+        }
+
+        generic_put(LOCATION, data, auth_token=self.sessionId, proxy=self.proxy, proxy_port=self.proxy_port)
