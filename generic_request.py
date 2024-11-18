@@ -14,6 +14,7 @@ def generic_jpeg_upload(path, image_io, auth_token=None, proxy=None, proxy_port=
     if proxy is not None and proxy_port is not None:
         c.setopt(c.PROXY, proxy)
         c.setopt(c.PROXYPORT, proxy_port)
+        c.setopt(c.PROXYTYPE, pycurl.PROXYTYPE_HTTP)
 
     c.setopt(c.URL, "https://grindr.mobi" + path)
     c.setopt(c.CUSTOMREQUEST, "POST")
@@ -62,7 +63,7 @@ def generic_post(path, data, auth_token=None, proxy=None, proxy_port=None):
     if proxy is not None and proxy_port is not None:
         c.setopt(c.PROXY, proxy)
         c.setopt(c.PROXYPORT, proxy_port)
-        # c.setopt(c.PROXYTYPE, pycurl.PROXYTYPE_HTTP)
+        c.setopt(c.PROXYTYPE, pycurl.PROXYTYPE_HTTP)
 
     c.setopt(c.URL, "https://grindr.mobi" + path)
     c.setopt(c.CUSTOMREQUEST, "POST")
@@ -111,7 +112,7 @@ def generic_put(path, data, auth_token=None, proxy=None, proxy_port=None):
     if proxy is not None and proxy_port is not None:
         c.setopt(c.PROXY, proxy)
         c.setopt(c.PROXYPORT, proxy_port)
-        # c.setopt(c.PROXYTYPE, pycurl.PROXYTYPE_HTTP)
+        c.setopt(c.PROXYTYPE, pycurl.PROXYTYPE_HTTP)
 
     c.setopt(c.URL, "https://grindr.mobi" + path)
     c.setopt(c.CUSTOMREQUEST, "PUT")
@@ -167,7 +168,7 @@ def generic_get(path, data, auth_token=None, proxy=None, proxy_port=None):
     if proxy is not None and proxy_port is not None:
         c.setopt(c.PROXY, proxy)
         c.setopt(c.PROXYPORT, proxy_port)
-        # c.setopt(c.PROXYTYPE, pycurl.PROXYTYPE_HTTP)
+        c.setopt(c.PROXYTYPE, pycurl.PROXYTYPE_HTTP)
 
     c.setopt(
         c.URL,
