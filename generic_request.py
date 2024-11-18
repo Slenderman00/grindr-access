@@ -29,7 +29,7 @@ def generic_jpeg_upload(path, image_io, auth_token=None, proxy=None, proxy_port=
         "l-locale: en_US",
         "l-time-zone: Europe/Oslo",
         "requirerealdeviceinfo: true",
-        "user-agent: grindr3/24.12.0.125239;125239;Free;Android 14;sdk_gphone64_x86_64;Google",
+        "user-agent: grindr3/24.17.1.131488;131488;Free;Android 14;sdk_gphone64_x86_64;Google",
     ]
 
     if auth_token is not None:
@@ -78,7 +78,7 @@ def generic_post(path, data, auth_token=None, proxy=None, proxy_port=None):
         "l-locale: en_US",
         "l-time-zone: Europe/Oslo",
         "requirerealdeviceinfo: true",
-        "user-agent: grindr3/24.12.0.125239;125239;Free;Android 14;sdk_gphone64_x86_64;Google",
+        "user-agent: grindr3/24.17.1.131488;131488;Free;Android 14;sdk_gphone64_x86_64;Google",
     ]
 
     if auth_token is not None:
@@ -127,7 +127,7 @@ def generic_put(path, data, auth_token=None, proxy=None, proxy_port=None):
         "l-locale: en_US",
         "l-time-zone: Europe/Oslo",
         "requirerealdeviceinfo: true",
-        "user-agent: grindr3/24.12.0.125239;125239;Free;Android 14;sdk_gphone64_x86_64;Google",
+        "user-agent: grindr3/24.17.1.131488;131488;Free;Android 14;sdk_gphone64_x86_64;Google",
         "Content-Length: " + str(len(data_json))
     ]
 

@@ -1,4 +1,5 @@
 from .generic_request import generic_post, generic_get, generic_put, generic_jpeg_upload
+from api import info
 from .paths import (
     SESSIONS,
     TAP,
@@ -12,10 +13,22 @@ from .paths import (
 )
 from .utils import to_geohash
 import binascii
+from functools import wraps
+
+
+def check_banned(func):
+    @wraps(func)
+    def wrapper(self, *args, **kwargs):
+        if self.banned:
+            return
+        return func(self, *args, **kwargs)
+    return wrapper
 
 
 class GrindrUser:
     def __init__(self):
+        self.banned = False
+
         self.sessionId = None
         self.profileId = ""
         self.authToken = None
@@ -35,17 +48,30 @@ class GrindrUser:
             proxy=self.proxy,
             proxy_port=self.proxy_port,
         )
+
         if "code" in response:
             code = response["code"]
 
             if code == 30:
                 raise Exception("You need to verify your account via phone number!")
 
+            if response["code"] == 27:
+                self.banned = True
+                raise Exception(f'Banned for {response['reason']}')
+
+            if response["code"] == 28:
+                self.banned = True
+                raise Exception("Banned")
+
+            if response["code"] == 8:
+                raise Exception("Deprecated client version")
+
         self.sessionId = response["sessionId"]
         self.profileId = response["profileId"]
         self.authToken = response["authToken"]
         self.xmppToken = response["xmppToken"]
 
+    @check_banned
     def getProfiles(self, lat, lon):
         params = {
             "nearbyGeoHash": to_geohash(lat, lon),
@@ -67,6 +93,7 @@ class GrindrUser:
         )
         return response
 
+    @check_banned
     def get_taps(self):
         response = generic_get(
             TAPS_RECIEVED,
@@ -78,6 +105,7 @@ class GrindrUser:
         return response
 
     # type is a number from 1 - ?
+    @check_banned
     def tap(self, profileId, type):
         response = generic_post(
             TAP,
@@ -88,6 +116,7 @@ class GrindrUser:
         )
         return response
 
+    @check_banned
     def get_profile(self, profileId):
         response = generic_get(
             GET_PROFILE + profileId,
@@ -99,6 +128,7 @@ class GrindrUser:
         return response
 
     # profileIdList MUST be an array of profile ids
+    @check_banned
     def get_profile_statuses(self, profileIdList):
         response = generic_post(
             STATUS,
@@ -109,6 +139,7 @@ class GrindrUser:
         )
         return response
 
+    @check_banned
     def get_album(self, profileId):
         response = generic_post(
             ALBUM,
@@ -120,6 +151,7 @@ class GrindrUser:
         return response
 
     # returns session data (might renew it)
+    @check_banned
     def sessions(self, email):
         response = generic_post(
             SESSIONS,
@@ -136,6 +168,7 @@ class GrindrUser:
 
         return response
 
+    @check_banned
     def update_profile(self, data):
         response = generic_put(
             PROFILE,
@@ -147,6 +180,7 @@ class GrindrUser:
         return response
 
     # generating plain auth
+    @check_banned
     def generate_plain_auth(self):
         auth = (
             self.profileId
@@ -161,6 +195,7 @@ class GrindrUser:
         _hex = _hex.replace("b'", "").replace("'", "")
         return _hex
 
+    @check_banned
     def upload_image(self, file_io):
         return generic_jpeg_upload(
             "/v3/me/profile/images?thumbCoords=194%2C0%2C174%2C20",
@@ -170,6 +205,7 @@ class GrindrUser:
             proxy_port=self.proxy_port,
         )
 
+    @check_banned
     def set_image(self, primary_hash, secondary_hashes=[]):
         data = {
             "primaryImageHash": primary_hash,
