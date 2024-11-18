@@ -1,5 +1,5 @@
 from .generic_request import generic_post, generic_get, generic_put, generic_jpeg_upload
-from api import info
+
 from .paths import (
     SESSIONS,
     TAP,
