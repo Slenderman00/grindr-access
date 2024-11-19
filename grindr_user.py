@@ -221,4 +221,4 @@ class GrindrUser:
             "geohash": to_geohash(lat, lng)
         }
 
-        generic_put(LOCATION, data, auth_token=self.sessionId, proxy=self.proxy, proxy_port=self.proxy_port)
+        return generic_put(LOCATION, data, auth_token=self.sessionId, proxy=self.proxy, proxy_port=self.proxy_port)
